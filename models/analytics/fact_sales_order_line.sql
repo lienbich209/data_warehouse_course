@@ -39,7 +39,9 @@ sales_order_line_key
 ,quantity
 ,unit_price
 ,gross_amount
-from fact_sales_order_line__calculate_measure
+,customer_key
+from fact_sales_order_line__calculate_measure a
+left join `learn-dbt-379414.learn_dbt_staging.stg_fact_sales_orders` b on a.sales_order_key=b.order_key 
 
 
 
