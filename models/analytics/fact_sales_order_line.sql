@@ -1,4 +1,5 @@
 SELECT 
   cast (order_line_id as integer) as sales_order_line_key ,cast(stock_item_id as integer) as product_key ,cast(quantity as integer) as quantity, cast(unit_price as numeric) as unit_price, cast(quantity as integer)*cast(unit_price as numeric) as gross_amount ,
-  stock_item_id
-FROM `vit-lam-data.wide_world_importers.sales__order_lines`
+  stock_item_id,cast (customer_id as integer) as customer_key
+FROM `vit-lam-data.wide_world_importers.sales__order_lines` a
+left join `vit-lam-data.wide_world_importers.sales__orders` b on a.order_id =b.order_id 
