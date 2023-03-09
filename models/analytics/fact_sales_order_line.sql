@@ -32,6 +32,9 @@ SELECT
 from fact_sales_order_line__cast_type
 )
 
+
+,fact_sales_order_line as (
+
 select 
 fact_line.sales_order_line_key
 ,fact_line.sales_order_key
@@ -43,7 +46,12 @@ fact_line.sales_order_line_key
 from fact_sales_order_line__calculate_measure as fact_line
 left join {{ref('stg_fact_sales_orders')}} as fact_header 
 on fact_line.sales_order_key=fact_header.order_key 
+)
 
+select customer_key, sum(gross_amount) doanh_thu
+from fact_sales_order_line
+group by customer_key
+order by doanh_thu
 
 
 
