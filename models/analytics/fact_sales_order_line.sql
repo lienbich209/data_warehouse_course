@@ -41,7 +41,7 @@ fact_line.sales_order_line_key
 ,fact_line.gross_amount
 ,fact_header.customer_key
 from fact_sales_order_line__calculate_measure as fact_line
-left join `learn-dbt-379414.learn_dbt_staging.stg_fact_sales_orders` as fact_header 
+left join {{ref('stg_fact_sales_orders')}} as fact_header 
 on fact_line.sales_order_key=fact_header.order_key 
 
 
