@@ -33,15 +33,16 @@ from fact_sales_order_line__cast_type
 )
 
 select 
-sales_order_line_key
-,sales_order_key
-,product_key
-,quantity
-,unit_price
-,gross_amount
-,customer_key
-from fact_sales_order_line__calculate_measure a
-left join `learn-dbt-379414.learn_dbt_staging.stg_fact_sales_orders` b on a.sales_order_key=b.order_key 
+fact_line.sales_order_line_key
+,fact_line.sales_order_key
+,fact_line.product_key
+,fact_line.quantity
+,fact_line.unit_price
+,fact_line.gross_amount
+,fact_header.customer_key
+from fact_sales_order_line__calculate_measure as fact_line
+left join `learn-dbt-379414.learn_dbt_staging.stg_fact_sales_orders` as fact_header 
+on fact_line.sales_order_key=fact_header.order_key 
 
 
 
