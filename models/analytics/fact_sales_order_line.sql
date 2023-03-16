@@ -44,17 +44,21 @@ fact_line.sales_order_line_key
 ,fact_line.gross_amount
 ,fact_header.customer_key
 ,fact_header.picked_by_person_key
+,fact_person.full_name
 from fact_sales_order_line__calculate_measure as fact_line
 left join {{ref('stg_fact_sales_orders')}} as fact_header 
-on fact_line.sales_order_key=fact_header.order_key 
+on fact_line.sales_order_key=fact_header.order_key
+left join {{ref('dim_person')}} as fact_person
+on fact_header.picked_by_person_key=fact_person.person_key
 )
 
 select 
   customer_key
   ,picked_by_person_key
-  , sum(gross_amount) doanh_thu
+  ,full_name
+  ,sum(gross_amount) doanh_thu
 from fact_sales_order_line
-group by customer_key, picked_by_person_key
+group by customer_key, picked_by_person_key, full_name
 order by doanh_thu
 
 
