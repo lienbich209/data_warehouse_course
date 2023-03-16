@@ -33,7 +33,8 @@ Select
   ,case 
   when is_chiller_stock_boolean is true then 'Chiller Stock'
   when is_chiller_stock_boolean is false then 'Not Chiller Stock'
-  else 'Unidentified' end as is_chiller_stock
+  when is_chiller_stock_boolean is null then 'Undefined'
+  else 'Invalid' end as is_chiller_stock
 from
   dim_product__cast_type
 )
