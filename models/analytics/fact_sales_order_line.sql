@@ -49,9 +49,12 @@ left join {{ref('stg_fact_sales_orders')}} as fact_header
 on fact_line.sales_order_key=fact_header.order_key 
 )
 
-select customer_key, sum(gross_amount) doanh_thu
+select 
+  customer_key
+  ,picked_by_person_key
+  , sum(gross_amount) doanh_thu
 from fact_sales_order_line
-group by customer_key
+group by customer_key, picked_by_person_key
 order by doanh_thu
 
 
