@@ -43,6 +43,7 @@ fact_line.sales_order_line_key
 ,fact_line.unit_price
 ,fact_line.gross_amount
 ,fact_header.customer_key
+,fact_header.picked_by_person_key
 from fact_sales_order_line__calculate_measure as fact_line
 left join {{ref('stg_fact_sales_orders')}} as fact_header 
 on fact_line.sales_order_key=fact_header.order_key 
