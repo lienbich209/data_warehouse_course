@@ -54,7 +54,7 @@ SELECT
   ,dim_state.state_province_code
   ,dim_state.state_province_name
   ,dim_state.country_key
-  ,dim_country.country_name
+  ,coalesce (dim_country.country_name,'Invalid') as country_name
 from 
   dim_state_province_add_undefined_record as dim_state
 left join {{ref('dim_country')}} as dim_country
