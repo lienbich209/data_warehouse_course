@@ -48,9 +48,9 @@ SELECT
   dim_city.city_key
   ,dim_city.city_name
   ,dim_city.state_province_key
-  ,dim_state_province.state_province_name
-  ,dim_state_province.country_key
-  ,dim_state_province.country_name
+  ,coalesce (dim_state_province.state_province_name,'Invalid') as state_province_name
+  ,coalesce (dim_state_province.country_key, -1) as country_key
+  ,coalesce (dim_state_province.country_name,'Invalid') as country_name
 from 
   dim_city_add_undefined_record as dim_city
 left join {{ref('dim_state_province')}} as dim_state_province
