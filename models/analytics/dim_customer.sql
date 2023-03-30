@@ -127,7 +127,7 @@ left join {{ref('dim_city')}} as dim_city_delivery
 on dim_customer.delivery_city_key=dim_city_delivery.city_key
 
 left join {{ref('dim_city')}} as dim_city_postal
-on dim_customer.delivery_city_key=dim_city_postal.city_key
+on dim_customer.postal_city_key=dim_city_postal.city_key
 
 left join {{ref('stg_dim_buying_groups')}} as dim_buying_group
 on dim_customer.buying_group_key=dim_buying_group.buying_group_key

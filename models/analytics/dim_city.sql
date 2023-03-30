@@ -54,4 +54,4 @@ SELECT
 from 
   dim_city_add_undefined_record as dim_city
 left join {{ref('dim_state_province')}} as dim_state_province
-on dim_state_province.state_province_key = dim_state_province.state_province_key 
+on dim_city.state_province_key = dim_state_province.state_province_key 
