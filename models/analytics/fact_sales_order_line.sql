@@ -61,14 +61,13 @@ fact_line.sales_order_line_key
 ,fact_line.description
 ,fact_line.picked_quantity
 ,fact_header.customer_key
-,fact_header.order_date
+,fact_header.order_date as order_date
 ,coalesce (fact_header.picked_by_person_key,-1) as picked_by_person_key
 ,coalesce(fact_header.picked_by_person_name,'Invalid') as picked_by_person_name
 ,coalesce (fact_header.salesperson_person_key,-1) as salesperson_person_key
 ,coalesce(fact_header.salesperson_person_name,'Invalid') as salesperson_person_name
 ,coalesce (fact_header.contact_person_key,-1) as contact_person_key
 ,coalesce(fact_header.contact_person_name,'Invalid') as contact_person_name
-,fact_header.order_date as order_date
 ,fact_header.expected_delivery_date as expected_delivery_date
 ,fact_person.full_name
 ,fact_line.package_type_key
@@ -92,8 +91,4 @@ on fact_line.product_key=dim_product.product_key
 from fact_sales_order_line
 group by customer_key, picked_by_person_key, full_name, order_date
 order by doanh_thu*/
-
-
-
-
 
