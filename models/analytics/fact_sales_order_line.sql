@@ -62,6 +62,7 @@ fact_line.sales_order_line_key
 ,fact_line.picked_quantity
 ,fact_header.customer_key
 ,fact_header.order_date as order_date
+,fact_header.is_undersupply_backordered
 ,coalesce (fact_header.picked_by_person_key,-1) as picked_by_person_key
 ,coalesce(fact_header.picked_by_person_name,'Invalid') as picked_by_person_name
 ,coalesce (fact_header.salesperson_person_key,-1) as salesperson_person_key

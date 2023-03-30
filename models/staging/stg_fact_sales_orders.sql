@@ -5,6 +5,7 @@ with fact_sales_order_source as
 select 
   order_id as order_key
   ,backorder_order_id as backorder_order_key
+  ,is_undersupply_backordered
   ,order_date
   ,expected_delivery_date
   ,customer_id as customer_key
@@ -18,6 +19,7 @@ from
 select 
   cast(order_key as integer) as order_key
   ,cast(backorder_order_key as integer) as backorder_order_key
+  ,cast(is_undersupply_backordered as boolean) as is_undersupply_backordered_boolean
   ,cast(order_date as date) as order_date
   ,cast(expected_delivery_date as date) as expected_delivery_date
   ,cast(customer_key as integer) as customer_key
@@ -28,9 +30,24 @@ select
 from 
 fact_sales_order__rename_column)
 
+
+,fact_sales_order__convert_boolean as (
+SELECT 
+  *
+  ,case
+    when is_undersupply_backordered_boolean is true then 'Undersupple Backorder'
+    when is_undersupply_backordered_boolean is false then 'Not Undersupple Backorder'
+    when is_undersupply_backordered_boolean is null then 'Undefined'
+    else 'Invalid' end as is_undersupply_backordered
+FROM
+  fact_sales_order__cast_type
+)
+
+
 select 
   fact_header.order_key
   ,fact_header.backorder_order_key
+  ,fact_header.is_undersupply_backordered
   ,fact_header.customer_key 
   ,dim_customer.customer_name
   ,coalesce (fact_header.picked_by_person_key,0) as picked_by_person_key
@@ -42,7 +59,7 @@ select
   ,fact_header.order_date
   ,fact_header.expected_delivery_date
 from 
-  fact_sales_order__cast_type as fact_header
+  fact_sales_order__convert_boolean as fact_header
 left join {{ref('dim_customer')}} as dim_customer
 on fact_header.customer_key = dim_customer.customer_key 
 left join {{ref('dim_person')}} as dim_person_picked
