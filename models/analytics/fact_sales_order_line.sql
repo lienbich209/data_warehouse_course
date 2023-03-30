@@ -47,6 +47,13 @@ select
 fact_line.sales_order_line_key
 ,fact_line.sales_order_key
 ,fact_line.product_key
+,coalesce(dim_product.product_name,'Invalid') as product_name
+,coalesce(dim_product.brand_name,'Invalid') as brand_name
+,coalesce(dim_product.is_chiller_stock,'Invalid') as is_chiller_stock
+,coalesce(dim_product.supplier_key,-1) as supplier_key
+,coalesce(dim_product.supplier_name,'Invalid') as supplier_name
+,coalesce(dim_product.color_key,-1) as color_key
+,coalesce(dim_product.color_name,'Invalid') as color_name
 ,fact_line.quantity
 ,fact_line.unit_price
 ,fact_line.gross_amount
@@ -56,6 +63,13 @@ fact_line.sales_order_line_key
 ,fact_header.customer_key
 ,fact_header.order_date
 ,coalesce (fact_header.picked_by_person_key,-1) as picked_by_person_key
+,coalesce(fact_header.picked_by_person_name,'Invalid') as picked_by_person_name
+,coalesce (fact_header.salesperson_person_key,-1) as salesperson_person_key
+,coalesce(fact_header.salesperson_person_name,'Invalid') as salesperson_person_name
+,coalesce (fact_header.contact_person_key,-1) as contact_person_key
+,coalesce(fact_header.contact_person_name,'Invalid') as contact_person_name
+,fact_header.order_date as order_date
+,fact_header.expected_delivery_date as expected_delivery_date
 ,fact_person.full_name
 ,fact_line.package_type_key
 ,fact_package.package_type_name
@@ -66,7 +80,8 @@ left join {{ref('dim_person')}} as fact_person
 on fact_header.picked_by_person_key=fact_person.person_key
 left join {{ref('dim_package_type')}} as fact_package
 on fact_line.package_type_key=fact_package.package_type_key
-
+left join {{ref('dim_product')}} as dim_product
+on fact_line.product_key=dim_product.product_key
 
 /*select 
   customer_key

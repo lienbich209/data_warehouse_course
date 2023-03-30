@@ -39,7 +39,8 @@ select
   ,coalesce(dim_person_salesperson.full_name,'Invalid') as salesperson_person_name
   ,coalesce(fact_header.contact_person_key,0)as contact_person_key
   ,coalesce(dim_person_contact.full_name,'Invalid') as contact_person_name
-  ,order_date
+  ,fact_header.order_date
+  ,fact_header.expected_delivery_date
 from 
   fact_sales_order__cast_type as fact_header
 left join {{ref('dim_customer')}} as dim_customer
